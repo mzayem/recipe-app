@@ -1,28 +1,32 @@
 import Banner from "@/components/banner";
 import Recipes from "@/components/recipe-feed";
-import Image from "next/image";
+import { Suspense } from "react";
+
+function delay(ms: number) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
+async function getData() {
+  const res = await fetch("https://recipes.eerieemu.com/api/recipe/", {
+    cache: "no-store", // Disables caching
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch data");
+  }
+
+  return res.json();
+}
 
 export default async function Home() {
-  let recipe;
-  try {
-    const data = await fetch(
-      "https://www.themealdb.com/api/json/v1/1/random.php"
-    );
-    const response = await data.json();
-
-    if (response.meals) {
-      recipe = response.meals[0];
-    } else {
-      throw new Error("No random recipes found.");
-    }
-  } catch (error) {
-    console.error("Error fetching random recipes:", error);
-  }
+  const data = await getData();
+  const recipe = data.results;
 
   return (
     <div>
       <Banner />
-      <Recipes data={recipe} /> {/* Pass the firstRecipe as data */}
+      <Suspense fallback={<div>Loading...</div>}>
+        <Recipes data={recipe} /> {/* Pass the firstRecipe as data */}
+      </Suspense>
     </div>
   );
 }
