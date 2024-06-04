@@ -22,7 +22,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <NextTopLoader />
+          <NextTopLoader color="#000000" />
           <Navbar />
           {children}
           <Footer />
