@@ -13,6 +13,11 @@ export const metadata: Metadata = {
   description: "Check latest recipes",
 };
 
+export interface HomeProps {
+  children: React.ReactNode;
+  params: { storeId: string };
+}
+
 export default function RootLayout({
   children,
 }: Readonly<{

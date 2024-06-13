@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { SearchBar } from "./searchbar";
+import SearchForm from "./search";
 
 export default function Banner() {
   const { theme } = useTheme();
@@ -18,7 +18,7 @@ export default function Banner() {
       }}
     >
       <h3 className="text-5xl font-bold">Find a Recipe</h3>
-      <SearchBar />
+      <SearchForm />
     </div>
   );
 }
